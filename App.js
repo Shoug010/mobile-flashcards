@@ -41,7 +41,7 @@ function MyTabs() {
         }
     }}
       >
-        <Tabs.Screen name="DeckListView" component={NewDeckView} />
+        <Tabs.Screen name="DeckListView" component={DeckListView} />
         <Tabs.Screen name="NewDeckView" component={NewDeckView} />
       </Tabs.Navigator>
     );
