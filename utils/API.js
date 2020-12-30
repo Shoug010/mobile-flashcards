@@ -47,6 +47,14 @@ export const getDecks = async () => {
     return data;
   }
 
+  export const getDeckByKey= async (key) => {
+    let data = await AsyncStorage.getItem(Deck);
+    data = JSON.parse(data);
+    data=data[key] 
+    console.log(data);
+    return data;
+  }
+  
 export const clearAppData = async ()=> {
     try {
         const keys = await AsyncStorage.getAllKeys();
@@ -54,4 +62,23 @@ export const clearAppData = async ()=> {
     } catch (error) {
         console.error('Error clearing app data.');
     }
+}
+export function submitNewQuestion( key1,question) {
+     let data 
+     getDeckByKey(key1).then((duck)=>{
+         data = duck
+        console.log("d", duck);
+        console.log("data" , data );
+        data.questions.push(question)
+        console.log(" duck =", data);
+        AsyncStorage.mergeItem(Deck,JSON.stringify({
+            [key1] : data
+       }))
+       getDecks().then((duck)=>{
+        console.log("after = ", duck);
+        })
+        })
+ 
+        //data.questions.push({question})
+    // console.log(" duck =", data);
 }

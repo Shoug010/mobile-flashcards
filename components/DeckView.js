@@ -1,12 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View ,FlatList} from 'react-native';
+import {submitNewDuck, getDecks,getall,getDeckByKey} from '../utils/API'
 
 class DeckView extends Component {
-    render(){
+    state = {
+        duck:{},
+      };
+    
+    componentDidMount(){       
+        getDeckByKey("JavaScript").then((duck)=>{
+            this.setState(()=>({duck}))
+            console.log("duck = ", duck);
+            })
+            console.log("comp did");
+        } 
+        renderItem = ({item})=>{
+        return  <Text key={item}>"{this.state.duck[item].title}" hava card number  {this.state.duck[item].questions.length}</Text>
+    }
+    render(){  
+        const Du =Object.keys(this.state.duck)
+        console.log("get= ",Du)
         return(
             <View>
-                <Text>This is DeckView component</Text>
+                <Text>This is DeckListView component </Text>
+                {this.state.duck === null ? (<Text>There is no duck !</Text>):(<View><FlatList data= {Du} renderItem={this.renderItem}/></View>)}
+
+                <Button title=" Add Card "/>
+                <Button title="Start Quiz"/>
             </View>
         )
     }

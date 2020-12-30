@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
 import { FlatList, Text, View } from 'react-native';
-import {submitNewDuck, getDecks,getall} from '../utils/API'
+import {submitNewDuck, getDecks,getall,getDeckByKey} from '../utils/API'
 
 class DeckListView extends Component {
     state = {
@@ -9,17 +9,16 @@ class DeckListView extends Component {
       };
     
     componentDidMount(){
-        getall()
         submitNewDuck( "user")
-        submitNewDuck("user1")
+        submitNewDuck("user")
         getDecks().then((duck)=>{
         this.setState(()=>({duck}))
         console.log("duck = ", duck);
         })
         console.log("comp did");
-    }
+    } 
     renderItem = ({item})=>{
-        return  <Text key={item}>"{this.state.duck[item].title}" hava card number  {this.state.duck[item].questions.length}</Text>
+        return  <Text key={item}>"{this.state.duck[item].title}" hava card number  </Text>
     }
     render(){  
         const Du =Object.keys( this.state.duck)
@@ -38,7 +37,5 @@ Deck List View (Default View)
 displays the title of each Deck
 displays the number of cards in each deck
 
- {g.map((a)=>{
-                    <Text>a.key</Text>
-                })}
+
 */
