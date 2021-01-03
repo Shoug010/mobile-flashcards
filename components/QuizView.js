@@ -19,7 +19,7 @@ class QuizView extends Component {
     }
     navigate=(question)=>{
         const navigation = this.props.navigation;
-        navigation.navigate("Quiz",{question:question,item:1})
+        navigation.navigate("Quiz",{question:question,item:0})
         console.log("n d = ",question);
     }
     
