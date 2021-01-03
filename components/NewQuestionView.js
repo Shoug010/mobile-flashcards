@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
 import { StyleSheet, Text, View ,TextInput,Button} from 'react-native';
 import {submitNewDuck, getDecks,getall,getDeckByKey,submitNewQuestion} from '../utils/API'
+import {CommonActions} from '@react-navigation/native';
 
 class NewQuestionView extends Component {
     state = {
@@ -11,7 +12,12 @@ class NewQuestionView extends Component {
         },
       };
     componentDidMount(){
-        getall()
+    }
+    toHome = () => {
+        this.props.navigation.dispatch(
+            CommonActions.goBack({
+                key: 'DeckView',
+            }))
     }
     render(){
         getDecks().then((duck)=>{
@@ -35,8 +41,8 @@ class NewQuestionView extends Component {
 
                 <Button title="Submit" onPress={()=>{
                     console.log("Q = ",questions)
-                    submitNewQuestion("JavaScript", questions)
-                    
+                    submitNewQuestion(this.props.route.params.title, questions)
+                    this.toHome()
                 }}/>
 
             </View>

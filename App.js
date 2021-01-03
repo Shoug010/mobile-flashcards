@@ -11,6 +11,7 @@ import NewQuestionView from './components/NewQuestionView'
 import DeckView from './components/DeckView'
 import QuizView from './components/QuizView'
 import Constants from "expo-constants";
+import Quiz from './components/Quiz'
 
 
 function MobileFlashcardsStatusBar({backgroundColor, ...props}) {
@@ -22,38 +23,60 @@ function MobileFlashcardsStatusBar({backgroundColor, ...props}) {
 }
 const Tabs = createBottomTabNavigator()
         
-function MyTabs() {
+const MyTabs= ()=> {
     return (
       <Tabs.Navigator
-      tabBarOptions={{
-        header: null,
-        activeTintColor: "purple",
-        style: {
-            height: 80 ,
-            backgroundColor:"white",
-            shadowColor: "rgba(0, 0, 0, 0.24)",
-            shadowOffset: {
-                width: 0,
-                height: 3
-            },
-            shadowRadius: 6,
-            shadowOpacity: 1
-        }
-    }}
+      initialRouteName="AddEntry"
       >
-        <Tabs.Screen name="DeckListView" component={DeckListView} />
+        <Tabs.Screen name="DeckListView" component={DeckListView}/>
         <Tabs.Screen name="NewDeckView" component={NewDeckView} />
       </Tabs.Navigator>
     );
   }
+  const Stack = createStackNavigator();
+  const MainNav = () => (
+    <Stack.Navigator initialRouteName="DeckListView"
+    headerMode="screen">
+      <Stack.Screen
+          name="DeckListView"
+          component={MyTabs}
+          options={{headerShown: false}}/>
+      <Stack.Screen
+          name="NewDeckView"
+          component={NewDeckView}
+          options={{
+              headerTintColor: "white",
+              headerStyle: {
+                  backgroundColor: "purple",
+              },
+              headerTitleStyle: {width: Dimensions.get("window").width}
+          }}/>
+          <Stack.Screen
+          name="NewQuestionView"
+          component={NewQuestionView}
+          />
+          <Stack.Screen
+          name="DeckView"
+          component={DeckView}
+          />
+          <Stack.Screen
+          name="QuizView"
+          component={QuizView}
+          />
+          <Stack.Screen
+          name="Quiz"
+          component={QuizView}
+          />
+
+    </Stack.Navigator>
+);
 
 export default function App() {
   return (
-    <View style={styles.container}>
-    <StatusBar style="auto" />
+    <View style={{flex: 1}} >
       <NavigationContainer>
         <MobileFlashcardsStatusBar/>
-        <MyTabs/>
+        <MainNav/>
      </NavigationContainer>
     </View>
   );

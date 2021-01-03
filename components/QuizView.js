@@ -1,33 +1,44 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
 import { StyleSheet, Text, View ,TextInput,Button,FlatList} from 'react-native';
-import {submitNewDuck, getDecks,getall,getDeckByKey,submitNewQuestion} from '../utils/API'
+import {submitNewDuck, getDecks,getall,getDeckByKey,getScore} from '../utils/API'
+import Quiz from './Quiz';
 
 class QuizView extends Component {
     state = {
-        duck:{},
+        show:false,
       };
     
-      componentDidMount(){       
-        getDeckByKey("JavaScript").then((duck)=>{
-            this.setState(()=>({duck}))
-            console.log("duck = ", duck);
-            })
-            console.log("comp did");
-    } 
+   
     renderItem = ({item})=>{
-        console.log("item= ", item );
-    return  <Text key={item.question}>"{item.question}"   answer is     {item.answer}</Text>
+            return (
+                <View>
+                    <Text></Text>
+                </View>
+            )
     }
-
+    
     render(){
-        const Du =this.state.duck.questions
-        console.log("get= ",Du)
+        let score = 0
+        const Du =this.props.route.params.questions
         return(
             <View>
                 <Text>This is QuizView component</Text>
-                {this.state.duck === null ? (<Text>There is no duck !</Text>):(<View><FlatList data= {Du} renderItem={this.renderItem}/></View>)}
+                {this.props.route.params.questions.length===0?(<View><Text>there is no card for this deck !</Text></View>):((<View><FlatList data={Du} renderItem={this.renderItem}/></View>))}
+                {Du.map ((D)=>{
+                    return(<View>
+                        <Text>{D.question}</Text>
+                        {this.state.show?(<Text>{D.answer}</Text>):(<View></View>)}
+                    <Button onPress={()=> {
+                        console.log("hi button");
+                        this.setState({show:!this.state.show})}
+                        } title="show answer "> </Button>
+                        <Button title="Correct" onPress={()=>{score=score+1}}/>
+                        <Button title="False"/>
 
+                    </View>)
+                })}
+                <Text>you score is {score}</Text>
             </View>
         )
     }

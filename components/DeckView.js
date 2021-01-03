@@ -8,30 +8,36 @@ class DeckView extends Component {
         duck:{},
       };
     
-    componentDidMount(){       
-        getDeckByKey("JavaScript").then((duck)=>{
-            this.setState(()=>({duck}))
-            console.log("duck = ", duck);
-            })
-            console.log("comp did");
-        } 
-        renderItem = ({item})=>{
-        return  <Text key={item}>"{this.state.duck[item].title}" hava card number  {this.state.duck[item].questions.length}</Text>
+    componentDidMount(){    
+        this.setState(()=>({duck:this.props.route.params.duck}))
     }
+    navigateToAdd=()=>{
+        const navigation = this.props.navigation;
+        navigation.navigate("NewQuestionView",{title:this.state.duck.title})
+    }
+    navigateToQuiz=()=>{
+        const navigation = this.props.navigation;
+        navigation.navigate("QuizView",{questions: this.state.duck.questions})
+    }
+        
     render(){  
-        const Du =Object.keys(this.state.duck)
-        console.log("get= ",Du)
+        console.log("bbb=",this.props.route.params.duck);
         return(
-            <View>
-                <Text>This is DeckListView component </Text>
-                {this.state.duck === null ? (<Text>There is no duck !</Text>):(<View><FlatList data= {Du} renderItem={this.renderItem}/></View>)}
-
-                <Button title=" Add Card "/>
-                <Button title="Start Quiz"/>
+            <View style={styles.container}>
+                <Text>This is View component </Text>
+                {this.state.duck === null ? (<Text>There is no duck !</Text>):(<View >
+                <Text style={{textAlign: 'center',color: 'black',fontWeight: 'bold',fontSize: 25,}}>{this.state.duck.title}</Text>
+                <Text style={{textAlign: 'center',fontSize: 15}}> card</Text>
+                <Button title=" Add Card " onPress={this.navigateToAdd}/>
+                <Button title="Start Quiz" onPress={this.navigateToQuiz}/></View>)}
             </View>
         )
     }
 }
+const styles = StyleSheet.create({
+    container: {
+      marginTop: 200,
+    }});
 
 export default DeckView;
 
