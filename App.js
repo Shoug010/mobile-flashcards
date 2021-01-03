@@ -12,7 +12,7 @@ import DeckView from './components/DeckView'
 import QuizView from './components/QuizView'
 import Constants from "expo-constants";
 import Quiz from './components/Quiz'
-
+import {setLocalNotification} from './utils/API'
 
 function MobileFlashcardsStatusBar({backgroundColor, ...props}) {
   return (
@@ -65,13 +65,17 @@ const MyTabs= ()=> {
           />
           <Stack.Screen
           name="Quiz"
-          component={QuizView}
+          component={Quiz}
           />
 
     </Stack.Navigator>
 );
 
-export default function App() {
+export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
+  render(){
   return (
     <View style={{flex: 1}} >
       <NavigationContainer>
@@ -79,8 +83,8 @@ export default function App() {
         <MainNav/>
      </NavigationContainer>
     </View>
-  );
-}
+  )
+}}
 
 const styles = StyleSheet.create({
   container: {

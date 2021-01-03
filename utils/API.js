@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-community/async-storage'
-
+import { Notifications } from 'expo'
+import * as Permissions from 'expo-permissions'
 const Deck = 'Deck'
+const NOTIFICATION_KEY = 'MobileFlashcard:notifications'
 
 const data = {
     React: {
@@ -89,4 +91,48 @@ export function submitNewQuestion( key1,question) {
  
         //data.questions.push({question})
     // console.log(" duck =", data);
+}
+export function clearLocalNotification () {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY)
+    .then(Notifications.cancelAllScheduledNotificationsAsync)
+}
+
+function createNotification () {
+  return {
+    title: 'Do not forgot to test your self!',
+    body: "!",
+    ios: {
+      sound: true,
+    }
+  }
+}
+
+export function setLocalNotification () {
+  AsyncStorage.getItem(NOTIFICATION_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data === null) {
+        Permissions.askAsync(Permissions.NOTIFICATIONS)
+          .then(({ status }) => {
+            if (status === 'granted') {
+              Notifications.cancelAllScheduledNotificationsAsync()
+
+              let tomorrow = new Date()
+              tomorrow.setDate(tomorrow.getDate() + 1)
+              tomorrow.setHours(20)
+              tomorrow.setMinutes(0)
+
+              Notifications.scheduleLocalNotificationAsync(
+                createNotification(),
+                {
+                  time: tomorrow,
+                  repeat: 'day',
+                }
+              )
+
+              AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
+            }
+          })
+      }
+    })
 }
