@@ -6,40 +6,40 @@ import {CommonActions} from '@react-navigation/native';
 
 class DeckListView extends Component {
     state = {
-        duck:{},
+        deck:{},
       };
     
     componentDidMount(){
         submitNewDuck( "user")
         submitNewDuck("user")
-        getDecks().then((duck)=>{
-        this.setState(()=>({duck}))
-        console.log("duck = ", duck);
+        getDecks().then((deck)=>{
+        this.setState(()=>({deck}))
+        console.log("deck = ", deck);
         })
         console.log("comp did");
     } 
-    navigate=(duck)=>{
+    navigate=(deck)=>{
         const navigation = this.props.navigation;
-        navigation.navigate("DeckView",{duck:duck})
-        console.log("n d = ",duck);
+        navigation.navigate("DeckView",{deck:deck})
+        console.log("n d = ",deck);
     }
     renderItem = ({item})=>{
         return (<View style={{flex: 1,height:100, backgroundColor: 'powderblue'}} key={item}> 
         <Button style={{textAlign: 'center',color: 'black',fontWeight: 'bold',fontSize: 25,}} onPress ={()=>{const navigation = this.props.navigation;
-        navigation.navigate("DeckView",{duck:this.state.duck[item]})
-        console.log("n d = ",this.state.duck[item]);}} title={this.state.duck[item].title}> </Button>
-        <Text style={{textAlign: 'center',fontSize: 15}}>{this.state.duck[item].questions.length} cards </Text>
+        navigation.navigate("DeckView",{deck:this.state.deck[item]})
+        console.log("n d = ",this.state.deck[item]);}} title={this.state.deck[item].title}> </Button>
+        <Text style={{textAlign: 'center',fontSize: 15}}>{this.state.deck[item].questions.length} cards </Text>
          </View>)
     }
     render(){  
         return(
             <View style={styles.container}>
                 <Text>This is DeckListView component </Text>
-                {this.state.duck === null ? (<Text>There is no duck !</Text>):(<View><FlatList data= {Object.keys( this.state.duck)} renderItem={this.renderItem}/></View>)}
+                {this.state.deck === null ? (<Text>There is no deck !</Text>):(<View><FlatList data= {Object.keys( this.state.deck)} renderItem={this.renderItem}/></View>)}
                 <Button title="refresh" onPress={()=>{
-                    getDecks().then((duck)=>{
-                        this.setState(()=>({duck}))
-                        console.log("duck2 = ", duck);
+                    getDecks().then((deck)=>{
+                        this.setState(()=>({deck}))
+                        console.log("duck2 = ", deck);
                     })
                 }}/>
             </View>

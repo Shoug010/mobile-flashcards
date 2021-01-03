@@ -1,12 +1,12 @@
 import React,{Component,useState} from 'react';
 import { StyleSheet, Text, View , TextInput, Button} from 'react-native';
-import {submitNewDuck, getDecks,clearAppData} from '../utils/API'
+import {submitNewDuck, getDeckByKey,clearAppData} from '../utils/API'
 import DeckListView from './DeckListView'
 import {CommonActions} from '@react-navigation/native';
 
 class NewDeckView extends Component {
     state = {
-        duck:{},
+        deck:{},
         text: ' '
       }
       toHome = () => {
@@ -15,11 +15,17 @@ class NewDeckView extends Component {
                 key: 'DeckListView',
             }))
     }
+    navigate=(deck)=>{
+        console.log("new",deck);
+        const navigation = this.props.navigation;
+        navigation.navigate("DeckView",{deck:deck})
+        console.log("n d = ",deck);
+    }
     render(){
         return(
             <View>
                 <Text>This is NewDeckView component</Text>
-                <Text>What is the Title for your new Duck ? </Text>
+                <Text>What is the Title for your new deck ? </Text>
                 <TextInput style={{height : 40 , borderColor: 'gray', borderWidth: 2}}  placeholder="Type here titel of the duck"
         onChangeText={(text) => this.setState({text})}
         value={this.state.text}
@@ -27,7 +33,12 @@ class NewDeckView extends Component {
                 <Button title="Submit" onPress={()=>{
                     console.log("new = ", this.state.text)
                     submitNewDuck(this.state.text)
-                    this.toHome()
+                    getDeckByKey(this.state.text).then((deck)=>{
+                        this.setState({deck})
+                        console.log("bbfff",deck);
+                        this.navigate(deck)
+                    })
+                    console.log(this.state.deck);
                 }}/>
             </View>
         )

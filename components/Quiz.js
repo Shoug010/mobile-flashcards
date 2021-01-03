@@ -1,41 +1,60 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
 import { StyleSheet, Text, View ,TextInput,Button,FlatList} from 'react-native';
-import {submitNewDuck, getDecks,getall,getDeckByKey,score} from '../utils/API'
+import { getDailyReminderValue,clearLocalNotification, setLocalNotification} from '../utils/API'
 
 class Quiz extends Component {
     state = {
         show:false,
-        item:this.props.route.params.item
       };
-      navigate=(question)=>{
+      navigate=(question,score1)=>{
+          let S = this.props.route.params.score
+          if(score1 ===1){
+            S=S+1
+          }
+          console.log("score", this.props.route.params.score);
           let item = this.props.route.params.item +1;
-          console.log(item, this.state.item);
+          console.log(item)
         const navigation = this.props.navigation;
-        navigation.navigate("Quiz",{question:question,item:item})
+        navigation.navigate("Quiz",{question:question,item:item,score:S,deck:this.props.route.params.deck})
         console.log("n d = ",question);
     }
-    Goback=()=>{
+    ReTest=(question)=>{
+        const navigation = this.props.navigation;
+        navigation.navigate("Quiz",{question:question,item:0,score:0,deck:this.props.route.params.deck})
+     }
 
-    }
+     GoBack=()=>{
+            const navigation = this.props.navigation;
+            navigation.navigate("DeckView",{deck:this.props.route.params.deck})
+        }
+     
     render(){
         let question= this.props.route.params.question
         let item1 = this.props.route.params.item
-        console.log(question);
+        let score = 0
+        console.log(question,this.props.route.params.score );
         return(
             <View>
                 <Text>This is Quiz component</Text>
-                {question.length === item1?(<View></View>):(<View>
+                {question.length === item1?(<View>
+                    <Text>Congrats you complete your Quiz !!</Text>
+                    <Text>your score is {this.props.route.params.score} out of {question.length}</Text>
+                    <Button title="take the Quiz again" onPress={()=>this.ReTest(question)}/>
+                    <Button title="Go back" onPress={()=>{this.GoBack()}}/>
+                    
+                </View>):(<View>
+                    <Text>{item1+1}/{question.length }</Text>
                     <Text>{question[item1].question}</Text>
                     {this.state.show?(<Text>{question[item1].answer}</Text>):(<View></View>)}
                     <Button onPress={()=> {
                         console.log("hi button");
                         this.setState({show:!this.state.show})}
-                        } title="show answer "> </Button>
-                        <Button title="Correct"/>
+                        } title="Show Answer "> </Button>
+                        <Button title="Correct" onPress={()=>{score = 1}}/>
                         <Button title="False"/>
                         <Button title="Next" onPress={()=>{
-                            this.navigate(question)
+                            this.navigate(question, score)
                             } 
                             }/>
                 </View>)}

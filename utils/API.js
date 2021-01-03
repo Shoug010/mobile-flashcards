@@ -28,7 +28,6 @@ const data = {
       ]
     }
   }
-let Score = 0
  export function getall (){
       return AsyncStorage.setItem(Deck,JSON.stringify(data))
   }
@@ -41,15 +40,7 @@ export function submitNewDuck( key1) {
          }
     })) 
 }
-export function Addscore (S){
-    score= Score+S
-}
-export function gerScor(){
-  return screen
-}
-export function clearScor (){
-  return score=0
-}
+
 export const getDecks = async () => {
     let data = await AsyncStorage.getItem(Deck);
     data = JSON.parse(data);

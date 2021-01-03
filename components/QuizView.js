@@ -2,36 +2,24 @@ import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
 import { StyleSheet, Text, View ,TextInput,Button,FlatList} from 'react-native';
 import {submitNewDuck, getDecks,getall,getDeckByKey,getScore} from '../utils/API'
-import Quiz from './Quiz';
 
 class QuizView extends Component {
-    state = {
-        show:false,
-      };
-    
    
-    renderItem = ({item})=>{
-            return (
-                <View>
-                    <Text></Text>
-                </View>
-            )
-    }
+    
     navigate=(question)=>{
         const navigation = this.props.navigation;
-        navigation.navigate("Quiz",{question:question,item:0})
+        navigation.navigate("Quiz",{question:question,item:0,score:0, deck:this.props.route.params.deck})
         console.log("n d = ",question);
     }
     
     render(){
-        let score = 0
         const Du =this.props.route.params.questions
+        console.log("Quizview", Du);
         return(
             <View>
                 <Text>This is QuizView component</Text>
-                {this.props.route.params.questions.length===0?(<View><Text>there is no card for this deck !</Text></View>):((<View>{this.navigate(Du)}</View>))}
+                {this.props.route.params.questions.length===0?(<View><Text>there is no card for this deck !</Text></View>):(<View>{this.navigate(Du)}</View>)}
                
-                <Text>you score is {score}</Text>
             </View>
         )
     }

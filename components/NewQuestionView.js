@@ -7,12 +7,11 @@ import {CommonActions} from '@react-navigation/native';
 class NewQuestionView extends Component {
     state = {
         questions:{
-            question: 'who are you',
-            answer: 'shoug'
-        },
+            question: ' ',
+            answer: ' '
+        }
       };
-    componentDidMount(){
-    }
+    
     toHome = () => {
         this.props.navigation.dispatch(
             CommonActions.goBack({
@@ -20,28 +19,24 @@ class NewQuestionView extends Component {
             }))
     }
     render(){
-        getDecks().then((duck)=>{
-            console.log("duckwww = ", duck);
+        getDecks().then((deck)=>{
+            console.log("duckwww = ", deck);
             })
            
-            let questions = {
-                question: '',
-                answer: ' '
-            }
         return(
             <View>
                 <Text>This is NewQuestionView component</Text>
-                <TextInput style={{height : 40 , borderColor: 'gray', borderWidth: 2}} onChange={
-                    (event)=>{console.log(event.target.value)
-                     questions.question=event.target.value}}/>
+                <TextInput style={{height : 40 , borderColor: 'gray', borderWidth: 2}} onChangeText={
+                    (text) => this.setState({ questions:{question:text}})
+                }/>
 
-                <TextInput style={{height : 40 , borderColor: 'gray', borderWidth: 2}} onChange={
-                    (event)=>{console.log(event.target.value)
-                     questions.answer=event.target.value}}/>
+                <TextInput style={{height : 40 , borderColor: 'gray', borderWidth: 2}} onChangeText={
+                    (text) => this.setState({ questions:{answer:text}})
+
+                    }/>
 
                 <Button title="Submit" onPress={()=>{
-                    console.log("Q = ",questions)
-                    submitNewQuestion(this.props.route.params.title, questions)
+                    submitNewQuestion(this.props.route.params.title, this.state.questions)
                     this.toHome()
                 }}/>
 

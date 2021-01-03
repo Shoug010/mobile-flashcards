@@ -4,30 +4,25 @@ import { Button, StyleSheet, Text, View ,FlatList} from 'react-native';
 import {submitNewDuck, getDecks,getall,getDeckByKey} from '../utils/API'
 
 class DeckView extends Component {
-    state = {
-        duck:{},
-      };
-    
-    componentDidMount(){    
-        this.setState(()=>({duck:this.props.route.params.duck}))
-    }
+   
     navigateToAdd=()=>{
         const navigation = this.props.navigation;
-        navigation.navigate("NewQuestionView",{title:this.state.duck.title})
+        navigation.navigate("NewQuestionView",{title:this.props.route.params.deck.title})
     }
     navigateToQuiz=()=>{
         const navigation = this.props.navigation;
-        navigation.navigate("QuizView",{questions: this.state.duck.questions})
+        navigation.navigate("QuizView",{questions: this.props.route.params.deck.questions,deck:this.props.route.params.deck})
     }
         
     render(){  
-        console.log("bbb=",this.props.route.params.duck);
+        console.log("bbb=",this.props.route.params.deck);
+        let deck = this.props.route.params.deck
         return(
             <View style={styles.container}>
                 <Text>This is View component </Text>
-                {this.state.duck === null ? (<Text>There is no duck !</Text>):(<View >
-                <Text style={{textAlign: 'center',color: 'black',fontWeight: 'bold',fontSize: 25,}}>{this.state.duck.title}</Text>
-                <Text style={{textAlign: 'center',fontSize: 15}}> card</Text>
+                {deck === null ? (<Text>There is no deck !</Text>):(<View >
+                <Text style={{textAlign: 'center',color: 'black',fontWeight: 'bold',fontSize: 25,}}>{deck.title}</Text>
+                <Text style={{textAlign: 'center',fontSize: 15}}> {deck.questions.length} card</Text>
                 <Button title=" Add Card " onPress={this.navigateToAdd}/>
                 <Button title="Start Quiz" onPress={this.navigateToQuiz}/></View>)}
             </View>
