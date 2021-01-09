@@ -44,7 +44,7 @@ export function submitNewDuck( key1) {
 export const getDecks = async () => {
     let data = await AsyncStorage.getItem(Deck);
     data = JSON.parse(data);
-    console.log(data);
+    console.log("getDecks",data);
     return data;
   }
 
@@ -52,7 +52,7 @@ export const getDecks = async () => {
     let data = await AsyncStorage.getItem(Deck);
     data = JSON.parse(data);
     data=data[key] 
-    console.log(data);
+    console.log("getDeckByKey",data);
     return data;
   }
   
@@ -79,9 +79,7 @@ export function submitNewQuestion( key1,question) {
         console.log("after = ", duck);
         })
         })
- 
-        //data.questions.push({question})
-    // console.log(" duck =", data);
+
 }
 export function clearLocalNotification () {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
@@ -110,7 +108,7 @@ export function setLocalNotification () {
 
               let tomorrow = new Date()
               tomorrow.setDate(tomorrow.getDate() + 1)
-              tomorrow.setHours(20)
+              tomorrow.setHours(23)
               tomorrow.setMinutes(0)
 
               Notifications.scheduleLocalNotificationAsync(

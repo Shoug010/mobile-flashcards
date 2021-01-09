@@ -5,13 +5,11 @@ import {submitNewDuck, getDecks,getall,getDeckByKey,getScore} from '../utils/API
 
 class QuizView extends Component {
    
-    
     navigate=(question)=>{
         const navigation = this.props.navigation;
         navigation.navigate("Quiz",{question:question,item:0,score:0, deck:this.props.route.params.deck})
         console.log("n d = ",question);
-    }
-    
+    }   
     render(){
         const Du =this.props.route.params.questions
         console.log("Quizview", Du);

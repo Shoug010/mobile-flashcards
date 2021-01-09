@@ -16,10 +16,10 @@ class NewDeckView extends Component {
             }))
     }
     navigate=(deck)=>{
-        console.log("new",deck);
+        console.log("NewDeckView new nav",deck);
         const navigation = this.props.navigation;
         navigation.navigate("DeckView",{deck:deck})
-        console.log("n d = ",deck);
+        console.log("NewDeckView n d = ",deck);
     }
     render(){
         return(
@@ -35,10 +35,8 @@ class NewDeckView extends Component {
                     submitNewDuck(this.state.text)
                     getDeckByKey(this.state.text).then((deck)=>{
                         this.setState({deck})
-                        console.log("bbfff",deck);
                         this.navigate(deck)
                     })
-                    console.log(this.state.deck);
                 }}/>
             </View>
         )

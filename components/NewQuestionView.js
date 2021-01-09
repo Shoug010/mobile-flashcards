@@ -6,38 +6,36 @@ import {CommonActions} from '@react-navigation/native';
 
 class NewQuestionView extends Component {
     state = {
-        questions:{
-            question: ' ',
-            answer: ' '
-        }
+        deck:{},
       };
     
-    toHome = () => {
-        this.props.navigation.dispatch(
-            CommonActions.goBack({
-                key: 'DeckView',
-            }))
+    navigateToQuiz=()=>{
+        const navigation = this.props.navigation;
+        navigation.navigate("DeckView",{deck:this.state.deck})
     }
     render(){
-        getDecks().then((deck)=>{
-            console.log("duckwww = ", deck);
-            })
-           
+            let questions={
+                question: ' ',
+                answer: ' '
+            } 
         return(
             <View>
                 <Text>This is NewQuestionView component</Text>
                 <TextInput style={{height : 40 , borderColor: 'gray', borderWidth: 2}} onChangeText={
-                    (text) => this.setState({ questions:{question:text}})
+                    (text) => {questions.question=text}
                 }/>
-
                 <TextInput style={{height : 40 , borderColor: 'gray', borderWidth: 2}} onChangeText={
-                    (text) => this.setState({ questions:{answer:text}})
-
+                    (text) => {questions.answer=text}
                     }/>
-
                 <Button title="Submit" onPress={()=>{
-                    submitNewQuestion(this.props.route.params.title, this.state.questions)
-                    this.toHome()
+                    submitNewQuestion(this.props.route.params.deck.title,questions)
+                    getDecks().then((deck)=>{
+                        this.setState(()=>({deck:deck[this.props.route.params.deck.title]}))
+                        console.log("qqqq",this.state.deck)
+                        console.log("new ",deck[this.props.route.params.deck.title]);
+                        this.navigateToQuiz()
+                        })
+                    
                 }}/>
 
             </View>

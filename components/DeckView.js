@@ -1,22 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
-import { Button, StyleSheet, Text, View ,FlatList} from 'react-native';
+import { Button, StyleSheet, Text, View ,Animated} from 'react-native';
 import {submitNewDuck, getDecks,getall,getDeckByKey} from '../utils/API'
 
 class DeckView extends Component {
-   
+    state = {
+        deck:{},
+      };
+    componentDidMount(){
+        console.log("comp did");
+        getDeckByKey(this.props.route.params.deck.title).then((deck)=>{
+        this.setState(()=>({deck}))
+        console.log("componentDidMount DeckView deck = ", deck);
+        })
+    } 
+
     navigateToAdd=()=>{
         const navigation = this.props.navigation;
-        navigation.navigate("NewQuestionView",{title:this.props.route.params.deck.title})
+        navigation.navigate("NewQuestionView",{deck:this.props.route.params.deck})
     }
     navigateToQuiz=()=>{
         const navigation = this.props.navigation;
         navigation.navigate("QuizView",{questions: this.props.route.params.deck.questions,deck:this.props.route.params.deck})
     }
-        
     render(){  
-        console.log("bbb=",this.props.route.params.deck);
+        console.log("render DeckView =",this.props.route.params.deck);
         let deck = this.props.route.params.deck
+        
         return(
             <View style={styles.container}>
                 <Text>This is View component </Text>

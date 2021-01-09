@@ -23,12 +23,12 @@ class Quiz extends Component {
         const navigation = this.props.navigation;
         navigation.navigate("Quiz",{question:question,item:0,score:0,deck:this.props.route.params.deck})
      }
-
      GoBack=()=>{
+        clearLocalNotification()
+        .then(setLocalNotification)
             const navigation = this.props.navigation;
             navigation.navigate("DeckView",{deck:this.props.route.params.deck})
         }
-     
     render(){
         let question= this.props.route.params.question
         let item1 = this.props.route.params.item
@@ -58,15 +58,12 @@ class Quiz extends Component {
                             } 
                             }/>
                 </View>)}
-               
-
             </View>
         )
     }
 }
 
 export default Quiz;
-
 
 /*
 Quiz View
