@@ -21,7 +21,7 @@ $ npm install
 ```
 For running the App in IOS you can run it using the Xcode simulator or a real phone by scanning the barcode,  to run it you can type
 ```
-$ Exp start
+$ Expo start
 ```
  
 
