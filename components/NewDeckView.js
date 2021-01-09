@@ -1,4 +1,4 @@
-import React,{Component,useState} from 'react';
+import React,{Component} from 'react';
 import { StyleSheet, Text, View , TextInput, Button} from 'react-native';
 import {submitNewDuck, getDeckByKey,clearAppData} from '../utils/API'
 import {CommonActions} from '@react-navigation/native';
@@ -22,13 +22,12 @@ class NewDeckView extends Component {
     }
     render(){
         return(
-            <View>
-                <Text>This is NewDeckView component</Text>
-                <Text>What is the Title for your new deck ? </Text>
+            <View style={styles.container}>
+                <Text style={{textAlign: 'center',fontSize: 15}}>What is the Title for your new deck ? </Text>
                 <TextInput style={{height : 40 , borderColor: 'gray', borderWidth: 2}}  placeholder="Type here titel of the duck"
-        onChangeText={(text) => this.setState({text})}
-        value={this.state.text}
-        />
+                    onChangeText={(text) => this.setState({text})}
+                    value={this.state.text}
+                />
                 <Button title="Submit" onPress={()=>{
                     console.log("new = ", this.state.text)
                     submitNewDuck(this.state.text)
@@ -41,7 +40,10 @@ class NewDeckView extends Component {
         )
     }
 }
-
+const styles = StyleSheet.create({
+    container: {
+      marginTop: 200,
+    }});
 export default NewDeckView;
 
 

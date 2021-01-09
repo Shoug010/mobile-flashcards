@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
 import { StyleSheet, Text, View ,Button} from 'react-native';
 import {clearLocalNotification, setLocalNotification} from '../utils/API'
@@ -7,17 +6,14 @@ class Quiz extends Component {
     state = {
         show:false,
       };
-      navigate=(question,score1)=>{
-          let S = this.props.route.params.score
-          if(score1 ===1){
+    navigate=(question,score1)=>{
+        let S = this.props.route.params.score
+        if(score1 ===1){
             S=S+1
-          }
-          console.log("score", this.props.route.params.score);
-          let item = this.props.route.params.item +1;
-          console.log(item)
+        }
+        let item = this.props.route.params.item +1;
         const navigation = this.props.navigation;
         navigation.navigate("Quiz",{question:question,item:item,score:S,deck:this.props.route.params.deck})
-        console.log("n d = ",question);
     }
     ReTest=(question)=>{
         const navigation = this.props.navigation;
@@ -25,7 +21,7 @@ class Quiz extends Component {
      }
      GoBack=()=>{
         clearLocalNotification()
-        .then(setLocalNotification)
+            .then(setLocalNotification)
             const navigation = this.props.navigation;
             navigation.navigate("DeckView",{deck:this.props.route.params.deck})
         }
@@ -36,16 +32,14 @@ class Quiz extends Component {
         console.log(question,this.props.route.params.score );
         return(
             <View style={styles.container}>
-                <Text>This is Quiz component</Text>
                 {question.length === item1?(<View>
                     <Text>Congrats you complete your Quiz !!</Text>
                     <Text>your score is {this.props.route.params.score} out of {question.length}</Text>
                     <Button title="take the Quiz again" onPress={()=>this.ReTest(question)}/>
-                    <Button title="Go back" onPress={()=>{this.GoBack()}}/>
-                    
+                    <Button title="Go back" onPress={()=>{this.GoBack()}}/>  
                 </View>):(<View>
-                    <Text>{item1+1}/{question.length }</Text>
-                    <Text>{question[item1].question}</Text>
+                    <Text >{item1+1}/{question.length }</Text>
+                    <Text style={{textAlign: 'center',fontSize: 15}}>{question[item1].question}</Text>
                     {this.state.show?(<Text>{question[item1].answer}</Text>):(<View></View>)}
                     <Button onPress={()=> {
                         this.setState({show:!this.state.show})}

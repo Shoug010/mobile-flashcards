@@ -1,7 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
-import { Button, StyleSheet, Text, View ,Animated} from 'react-native';
-import {submitNewDuck, getDecks,getall,getDeckByKey} from '../utils/API'
+import { Button, StyleSheet, Text, View } from 'react-native';
+import {getDeckByKey} from '../utils/API'
 
 class DeckView extends Component {
     state = {
@@ -14,7 +13,6 @@ class DeckView extends Component {
         console.log("componentDidMount DeckView deck = ", deck);
         })
     } 
-
     navigateToAdd=()=>{
         const navigation = this.props.navigation;
         navigation.navigate("NewQuestionView",{deck:this.props.route.params.deck})
@@ -29,8 +27,7 @@ class DeckView extends Component {
         
         return(
             <View style={styles.container}>
-                <Text>This is View component </Text>
-                {deck === null ? (<Text>There is no deck !</Text>):(<View >
+                {deck === null ? (<Text style={{textAlign: 'center',fontSize: 15}}>There is no deck !</Text>):(<View >
                 <Text style={{textAlign: 'center',color: 'black',fontWeight: 'bold',fontSize: 25,}}>{deck.title}</Text>
                 <Text style={{textAlign: 'center',fontSize: 15}}> {deck.questions.length} card</Text>
                 <Button title=" Add Card " onPress={this.navigateToAdd}/>

@@ -41,14 +41,8 @@ class DeckListView extends Component {
         console.log("DeckListView render");
         return(
             <View style={styles.container}>
-                <Text>This is DeckListView component </Text>
-                {this.state.deck === null ? (<Text>There is no deck !</Text>):(<View><FlatList data= {Object.keys( this.state.deck)} renderItem={this.renderItem} keyExtractor={(item , index)=>index.toString()}/></View>)}
-                <Button title="refresh" onPress={()=>{
-                    getDecks().then((deck)=>{
-                        this.setState(()=>({deck}))
-                        console.log("duck2 = ", deck);
-                    })
-                }}/>
+                <Text style={{textAlign: 'center',fontSize: 15}}>Your Deck List </Text>
+                {this.state.deck === null ? (<Text style={{textAlign: 'center',fontSize: 15}}>There is no deck !</Text>):(<View><FlatList data= {Object.keys( this.state.deck)} renderItem={this.renderItem} keyExtractor={(item , index)=>index.toString()}/></View>)}
             </View>
         )
     }
@@ -67,10 +61,6 @@ const styles = StyleSheet.create({
         borderColor: "#20232a",
         borderRadius: 6,
         backgroundColor: "rgb(0, 153, 153)",
-    },
-    img:{
-        height:20,
-        width:20,
     }
 });
 export default DeckListView;

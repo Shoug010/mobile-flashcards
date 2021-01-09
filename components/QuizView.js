@@ -12,14 +12,18 @@ class QuizView extends Component {
         const Du =this.props.route.params.questions
         console.log("Quizview", Du);
         return(
-            <View>
-                <Text>This is QuizView component</Text>
-                {this.props.route.params.questions.length===0?(<View><Text>there is no card for this deck !</Text></View>):(<View>{this.navigate(Du)}</View>)}             
+            <View style={styles.container}>
+                {this.props.route.params.questions.length===0?(<View><Text style={{textAlign: 'center',fontSize: 15}}>there is no card for this deck !</Text></View>):(<View>{this.navigate(Du)}</View>)}             
             </View>
         )
     }
 }
-
+const styles = StyleSheet.create({
+    container: {
+      marginTop: 200,
+      backgroundColor: "#eaeaea",
+    }
+});
 export default QuizView;
 
 

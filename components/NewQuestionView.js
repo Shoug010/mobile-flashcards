@@ -12,12 +12,12 @@ class NewQuestionView extends Component {
         navigation.navigate("DeckView",{deck:this.state.deck})
     }
     render(){
-            let questions={
-                question: ' ',
-                answer: ' '
-            } 
+        let questions={
+            question: ' ',
+            answer: ' '
+        } 
         return(
-            <View>
+            <View style={styles.container}>
                 <Text>This is NewQuestionView component</Text>
                 <TextInput style={{height : 40 , borderColor: 'gray', borderWidth: 2}} onChangeText={
                     (text) => {questions.question=text}
@@ -33,11 +33,14 @@ class NewQuestionView extends Component {
                         this.navigateToQuiz()
                     })
                 }}/>
-
             </View>
         )
     }
 }
+const styles = StyleSheet.create({
+    container: {
+      marginTop: 200,
+    }});
 export default NewQuestionView;
 
 
