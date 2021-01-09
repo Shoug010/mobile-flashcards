@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
-import { StyleSheet, Text, View ,TextInput,Button,FlatList} from 'react-native';
-import { getDailyReminderValue,clearLocalNotification, setLocalNotification} from '../utils/API'
+import { StyleSheet, Text, View ,Button} from 'react-native';
+import {clearLocalNotification, setLocalNotification} from '../utils/API'
 
 class Quiz extends Component {
     state = {
@@ -35,7 +35,7 @@ class Quiz extends Component {
         let score = 0
         console.log(question,this.props.route.params.score );
         return(
-            <View>
+            <View style={styles.container}>
                 <Text>This is Quiz component</Text>
                 {question.length === item1?(<View>
                     <Text>Congrats you complete your Quiz !!</Text>
@@ -48,7 +48,6 @@ class Quiz extends Component {
                     <Text>{question[item1].question}</Text>
                     {this.state.show?(<Text>{question[item1].answer}</Text>):(<View></View>)}
                     <Button onPress={()=> {
-                        console.log("hi button");
                         this.setState({show:!this.state.show})}
                         } title="Show Answer "> </Button>
                         <Button title="Correct" onPress={()=>{score = 1}}/>
@@ -62,7 +61,10 @@ class Quiz extends Component {
         )
     }
 }
-
+const styles = StyleSheet.create({
+    container: {
+      marginTop: 200,
+    }});
 export default Quiz;
 
 /*
