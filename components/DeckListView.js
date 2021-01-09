@@ -5,7 +5,6 @@ import {submitNewDuck, getDecks,getall,getDeckByKey,clearAppData} from '../utils
 class DeckListView extends Component {
     state = {
         deck:{},
-        opacity: new Animated.Value(0)
       };
     componentDidMount(){
         console.log("DeckListView comp did");
@@ -21,19 +20,23 @@ class DeckListView extends Component {
     }
  
     renderItem = ({item})=>{
-        const {opacity}=this.state.opacity
-        return (<View style={[styles.ReView]}> 
-        <Animated.Image
-        style={[styles.img], opacity}
-        source={{uri:'../book.png'}}
-        />
-        <Button color="#ffffff" style={{textAlign: 'center',
-        fontWeight: "bold"}} onPress ={()=>{
-            Animated.timing(opacity,{toValue:3,duration: 1000}).start()
-            this.navigate(this.state.deck[item])}} title={this.state.deck[item].title}/>
-        <Text style={{textAlign: 'center',fontSize: 15}}>{this.state.deck[item].questions.length} cards </Text>
-         </View>)
-    }
+               const borderWidth = new Animated.Value(4)
+               return (<Animated.View style={{ 
+                flex: 1,
+                height:100,
+                marginTop: 16,
+                paddingVertical: 8,
+                borderWidth: borderWidth,
+                borderColor: "#20232a",
+                borderRadius: 6,
+                backgroundColor: "rgb(0, 153, 153)",}}> 
+               <Button color="#ffffff" style={{textAlign: 'center',
+               fontWeight: "bold"}} onPress ={()=>{
+                Animated.timing(borderWidth,{toValue:9,duration: 1000,useNativeDriver: false}).start()
+                this.navigate(this.state.deck[item])}} title={this.state.deck[item].title}/>
+               <Text style={{textAlign: 'center',fontSize: 15}}>{this.state.deck[item].questions.length} cards </Text>
+                </Animated.View>)
+           }
     render(){  
         console.log("DeckListView render");
         return(
@@ -64,7 +67,10 @@ const styles = StyleSheet.create({
         borderColor: "#20232a",
         borderRadius: 6,
         backgroundColor: "rgb(0, 153, 153)",
-       
+    },
+    img:{
+        height:20,
+        width:20,
     }
 });
 export default DeckListView;

@@ -1,8 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
 import React,{Component} from 'react';
 import { StyleSheet, Text, View ,TextInput,Button} from 'react-native';
-import {submitNewDuck, getDecks,getall,getDeckByKey,submitNewQuestion} from '../utils/API'
-import {CommonActions} from '@react-navigation/native';
+import { getDecks,submitNewQuestion} from '../utils/API'
 
 class NewQuestionView extends Component {
     state = {
@@ -31,11 +29,9 @@ class NewQuestionView extends Component {
                     submitNewQuestion(this.props.route.params.deck.title,questions)
                     getDecks().then((deck)=>{
                         this.setState(()=>({deck:deck[this.props.route.params.deck.title]}))
-                        console.log("qqqq",this.state.deck)
-                        console.log("new ",deck[this.props.route.params.deck.title]);
+                        console.log("duck2 = ", deck);
                         this.navigateToQuiz()
-                        })
-                    
+                    })
                 }}/>
 
             </View>

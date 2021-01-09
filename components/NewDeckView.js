@@ -1,7 +1,6 @@
 import React,{Component,useState} from 'react';
 import { StyleSheet, Text, View , TextInput, Button} from 'react-native';
 import {submitNewDuck, getDeckByKey,clearAppData} from '../utils/API'
-import DeckListView from './DeckListView'
 import {CommonActions} from '@react-navigation/native';
 
 class NewDeckView extends Component {
